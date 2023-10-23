@@ -1,4 +1,4 @@
-%% test
+wen'l%% test
 % clc;
 clear;
 close all;
@@ -6,7 +6,7 @@ close all;
 %% Load data
 load_beat_signal = 1;
 training_or_testing = 0;     % 0: training data,  1: testing data
-breathing_or_heartbeat = 0;  % 0: breathing data, 1: heartbeat data
+breathing_or_heartbeat = 1;  % 0: breathing data, 1: heartbeat data
 
 %% Set up
 selected_bin_num = 5;  % select 5 range bins
@@ -24,11 +24,11 @@ window_num = 175;
 % window_num is equal to 175 = 180 - 6 + 1 (180 sec signal sliding with 6 sec window, each sliding step is 1 sec)
 
 plot_EWS_CDF = 1;
-plot_check_idx = [0];
-plot_after_bandpass_filter_idx = [0];
-plot_M1_idx = [0];
-plot_EWS_idx = [0];
-plot_range_map_idx = [0];
+plot_check_idx = [1];
+plot_after_bandpass_filter_idx = [1];
+plot_M1_idx = [1];
+plot_EWS_idx = [1];
+plot_range_map_idx = [1];
 %% Parameters
 frequency_carrier = 77 * 10^9;
 BW = 4*10^9;                      % bandwidth of FMCW radar
@@ -64,16 +64,16 @@ for data_idx = 1:data_num
         
     if load_beat_signal == 1 && training_or_testing == 0 && breathing_or_heartbeat == 0
         load(sprintf('./data/data_beat_train/breathing/radarSignal_%d.mat', data_idx)); % beat signal from radar
-        load(sprintf('./data/data_beat_train/breathing/ground truth/rawData_%d.mat', data_idx)); % ground truth frequency from contact devices
+        load(sprintf('./data/data_beat_train/breathing/ground_truth/rawData_%d.mat', data_idx)); % ground truth frequency from contact devices
     elseif load_beat_signal == 1 && training_or_testing == 0 && breathing_or_heartbeat == 1
         load(sprintf('./data/data_beat_train/heartbeat/radarSignal_%d.mat', data_idx));
-        load(sprintf('./data/data_beat_train/heartbeat/ground truth/rawData_%d.mat', data_idx));
+        load(sprintf('./data/data_beat_train/heartbeat/ground_truth/rawData_%d.mat', data_idx));
     elseif load_beat_signal == 1 && training_or_testing == 1 && breathing_or_heartbeat == 0
         load(sprintf('./data/data_beat_test/breathing/radarSignal_%d.mat', data_idx));
-        load(sprintf('./data/data_beat_test/breathing/ground truth/rawData_%d.mat', data_idx));
+        load(sprintf('./data/data_beat_test/breathing/ground_truth/rawData_%d.mat', data_idx));
     elseif load_beat_signal == 1 && training_or_testing == 1 && breathing_or_heartbeat == 1
         load(sprintf('./data/data_beat_test/heartbeat/radarSignal_%d.mat', data_idx));
-        load(sprintf('./data/data_beat_test/heartbeat/ground truth/rawData_%d.mat', data_idx));
+        load(sprintf('./data/data_beat_test/heartbeat/ground_truth/rawData_%d.mat', data_idx));
     end
     %% get range profile matrix from the data
     beat_signal_vector = rawData;
@@ -208,7 +208,7 @@ for data_idx = 1:data_num
         M1_esti_freq(1,2) = (posi-1)*slow_time_fre/length(esti_vital_sign_signal);  % est_h
 
         if sum(map_idx == plot_M1_idx) == 1
-            fprintf('M4: \n ground truth: '); fprintf('%g  %g', frequency_breathing(map_idx), frequency_heartbeat(map_idx)); fprintf('\n');
+            fprintf('M4: \n ground_truth: '); fprintf('%g  %g', frequency_breathing(map_idx), frequency_heartbeat(map_idx)); fprintf('\n');
             disp(M1_esti_freq);
             FFT_abs_FFT_h = abs(fft(esti_vital_sign_signal_h));
             fre_domain_FFT_h = (0:length(esti_vital_sign_signal_h)-1)*slow_time_fre/length(esti_vital_sign_signal_h);
@@ -304,6 +304,7 @@ for data_idx = 1:data_num
             title('Range Profile Matrix'); ylabel('Range (m)'); xlabel('Time (sec)');
         end
     end
+    break %add by zyy
 end
 
 %% error CDF
