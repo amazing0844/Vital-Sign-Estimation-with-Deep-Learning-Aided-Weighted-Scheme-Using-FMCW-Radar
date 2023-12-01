@@ -21,7 +21,7 @@ elseif training_or_testing == 1
     data_num = 10;
 end
 window_num = 175;
-% window_num = 15;
+window_num = 15;
 % window_num is equal to 175 = 180 - 6 + 1 (180 sec signal sliding with 6 sec window, each sliding step is 1 sec)
 
 plot_EWS_CDF = 1;
@@ -36,17 +36,17 @@ BW = 4*10^9;                      % bandwidth of FMCW radar
 speed_of_light = physconst('LightSpeed');
 delta_R = speed_of_light/(2*BW);   % range resolution
 ObsTime = 6;                       % unit: second
-% ObsTime = 19;                       % our unit: second
+ObsTime = 19;                       % our unit: second
 FramePeriod = 10*10^(-3);          % chirp period = 10 ms
 % FramePeriod = 0.1;                  % our frame period = 100 ms
 slow_time_fre = 1/FramePeriod;
 FrameNum = ObsTime/FramePeriod;
 
 chirp_duration = 50*10^(-6) * 0.8; % chirp duration = 50 us; because radar_ADC_samples = 80 => 50*0.8;
-% chirp_duration = 50*10^(-6) * 0.8; % chirp duration = 50 us; because radar_ADC_samples = 64 => 50*0.8;
+chirp_duration = 50*10^(-6) * 0.8; % chirp duration = 50 us; because radar_ADC_samples = 64 => 50*0.8;
 fs = 2*10^6;                       % fast time sampling frequency -> sampling period = 0.5 us
 chirp_samples_num = chirp_duration/(1/fs);
-% chirp_samples_num = 64; %our
+chirp_samples_num = 64; %our
 
 freq_breathing_lower_bound = 0.1;
 freq_breathing_upper_bound = 0.5;
@@ -73,7 +73,7 @@ for data_idx = 1:data_num
     elseif load_beat_signal == 1 && training_or_testing == 0 && breathing_or_heartbeat == 1
         load(sprintf('./data/data_beat_train/heartbeat/radarSignal_%d.mat', data_idx));
         % load(sprintf('./data/data_beat_train/heartbeat/test%d.mat', data_idx));%add by zyy
-        % load('./data/data_beat_train/heartbeat/walk.mat');%add by zyy
+        load('./data/data_beat_train/heartbeat/walk3.mat');%add by zyy
         load(sprintf('./data/data_beat_train/heartbeat/ground_truth/rawData_%d.mat', data_idx));
     elseif load_beat_signal == 1 && training_or_testing == 1 && breathing_or_heartbeat == 0
         load(sprintf('./data/data_beat_test/breathing/radarSignal_%d.mat', data_idx));
