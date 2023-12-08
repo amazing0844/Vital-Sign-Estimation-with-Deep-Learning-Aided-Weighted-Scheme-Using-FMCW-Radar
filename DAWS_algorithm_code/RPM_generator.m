@@ -38,7 +38,7 @@ delta_R = speed_of_light/(2*BW);   % range resolution
 ObsTime = 6;                       % unit: second
 ObsTime = 19;                       % our unit: second
 FramePeriod = 10*10^(-3);          % chirp period = 10 ms
-% FramePeriod = 0.1;                  % our frame period = 100 ms
+FramePeriod = 40*10^(-3);                  % our frame period = 40 ms
 slow_time_fre = 1/FramePeriod;
 FrameNum = ObsTime/FramePeriod;
 
@@ -46,7 +46,7 @@ chirp_duration = 50*10^(-6) * 0.8; % chirp duration = 50 us; because radar_ADC_s
 chirp_duration = 50*10^(-6) * 0.8; % chirp duration = 50 us; because radar_ADC_samples = 64 => 50*0.8;
 fs = 2*10^6;                       % fast time sampling frequency -> sampling period = 0.5 us
 chirp_samples_num = chirp_duration/(1/fs);
-chirp_samples_num = 64; %our
+chirp_samples_num = 80; %our
 
 freq_breathing_lower_bound = 0.1;
 freq_breathing_upper_bound = 0.5;
@@ -73,7 +73,7 @@ for data_idx = 1:data_num
     elseif load_beat_signal == 1 && training_or_testing == 0 && breathing_or_heartbeat == 1
         load(sprintf('./data/data_beat_train/heartbeat/radarSignal_%d.mat', data_idx));
         % load(sprintf('./data/data_beat_train/heartbeat/test%d.mat', data_idx));%add by zyy
-        load('./data/data_beat_train/heartbeat/walk_zhao.mat');%add by zyy
+        load('./data/data_beat_train/heartbeat/pad.mat');%add by zyy
         load(sprintf('./data/data_beat_train/heartbeat/ground_truth/rawData_%d.mat', data_idx));
     elseif load_beat_signal == 1 && training_or_testing == 1 && breathing_or_heartbeat == 0
         load(sprintf('./data/data_beat_test/breathing/radarSignal_%d.mat', data_idx));
@@ -85,7 +85,7 @@ for data_idx = 1:data_num
     %% get range profile matrix from the data
     beat_signal_vector = rawData;
     radar_ADC_samples = 80;
-    radar_ADC_samples = 64;  % our adc samples
+    % radar_ADC_samples = 64;  % our adc samples
     reservation_time = 180;  % The data at the beginning time is unstable, so we only keep the latter part (180 sec).
     reservation_time = 19;
     start_time = (length(beat_signal_vector)/radar_ADC_samples - reservation_time*slow_time_fre) / slow_time_fre;

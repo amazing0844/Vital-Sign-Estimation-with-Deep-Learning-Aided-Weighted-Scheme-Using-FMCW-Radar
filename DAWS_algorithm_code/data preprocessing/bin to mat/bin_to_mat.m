@@ -10,9 +10,9 @@ close all;
 %% global variables
 % change based on sensor config
 numADCSamples = 80; %  original code
-numADCSamples = 64; % number of ADC samples per chirp     %default 256
+% numADCSamples = 64; % number of ADC samples per chirp     %default 256
 numADCBits = 16; % number of ADC bits per sample
-numRX = 1; % number of receivers%%default4
+numRX = 4; % number of receivers%%default4
 %     numLanes = 2; % do not change. number of lanes is always 2
 isReal = 0; % set to 1 if real only data, 0 if complex data
 
@@ -20,7 +20,7 @@ isReal = 0; % set to 1 if real only data, 0 if complex data
 % /Users/zyy/Desktop/PhD/Radar/Vital-Sign-Estimation-with-Deep-Learning-Aided-Weighted-Scheme-Using-FMCW-Radar/data/heartData/measure/data_all
 for file_i = 1:16
     fileName = ['./rawData_',int2str(file_i),'.bin'];
-    fileName = ['./walk_zhao.bin'];
+    fileName = ['./pad.bin'];
     % read .bin file
     fid = fopen(fileName,'r');
     adcData = fread(fid, 'int16');
@@ -72,5 +72,5 @@ for file_i = 1:16
     retVal = adcData;
     rawData = retVal;
     % save(['./../../data/data_beat_train/heartbeat/radarSignal_',int2str(file_i),'.mat'],'rawData');
-    save(['./../../data/data_beat_train/heartbeat/walk_zhao.mat'],'rawData');
+    save(['./../../data/data_beat_train/heartbeat/pad.mat'],'rawData');
 end
