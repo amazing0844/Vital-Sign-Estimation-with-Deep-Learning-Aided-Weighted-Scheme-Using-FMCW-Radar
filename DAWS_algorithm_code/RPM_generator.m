@@ -38,7 +38,7 @@ delta_R = speed_of_light/(2*BW);   % range resolution
 ObsTime = 6;                       % unit: second
 ObsTime = 19;                       % our unit: second
 FramePeriod = 10*10^(-3);          % chirp period = 10 ms
-FramePeriod = 5*10^(-3);                  % our frame period = 40 ms
+FramePeriod = 5*10^(-3);           % our frame period = 40 ms
 slow_time_fre = 1/FramePeriod;
 FrameNum = ObsTime/FramePeriod;
 
