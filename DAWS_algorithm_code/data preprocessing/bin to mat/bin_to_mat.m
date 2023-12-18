@@ -20,7 +20,7 @@ isReal = 0; % set to 1 if real only data, 0 if complex data
 % /Users/zyy/Desktop/PhD/Radar/Vital-Sign-Estimation-with-Deep-Learning-Aided-Weighted-Scheme-Using-FMCW-Radar/data/heartData/measure/data_all
 for file_i = 1:16
     fileName = ['./rawData_',int2str(file_i),'.bin'];
-    fileName = ['./pad.bin'];
+    fileName = ['./pad_5ms.bin'];
     % read .bin file
     fid = fopen(fileName,'r');
     adcData = fread(fid, 'int16');
@@ -72,5 +72,5 @@ for file_i = 1:16
     retVal = adcData;
     rawData = retVal;
     % save(['./../../data/data_beat_train/heartbeat/radarSignal_',int2str(file_i),'.mat'],'rawData');
-    save(['./../../data/data_beat_train/heartbeat/pad.mat'],'rawData');
+    save(['./../../data/data_beat_train/heartbeat/pad_5ms.mat'],'rawData');
 end

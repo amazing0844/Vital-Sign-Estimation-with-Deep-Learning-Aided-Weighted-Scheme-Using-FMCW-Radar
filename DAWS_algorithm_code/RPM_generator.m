@@ -21,7 +21,7 @@ elseif training_or_testing == 1
     data_num = 10;
 end
 window_num = 175;
-window_num = 15;
+window_num = 25;
 % window_num is equal to 175 = 180 - 6 + 1 (180 sec signal sliding with 6 sec window, each sliding step is 1 sec)
 
 plot_EWS_CDF = 1;
@@ -38,7 +38,7 @@ delta_R = speed_of_light/(2*BW);   % range resolution
 ObsTime = 6;                       % unit: second
 ObsTime = 19;                       % our unit: second
 FramePeriod = 10*10^(-3);          % chirp period = 10 ms
-FramePeriod = 40*10^(-3);                  % our frame period = 40 ms
+FramePeriod = 5*10^(-3);                  % our frame period = 40 ms
 slow_time_fre = 1/FramePeriod;
 FrameNum = ObsTime/FramePeriod;
 
@@ -73,7 +73,7 @@ for data_idx = 1:data_num
     elseif load_beat_signal == 1 && training_or_testing == 0 && breathing_or_heartbeat == 1
         load(sprintf('./data/data_beat_train/heartbeat/radarSignal_%d.mat', data_idx));
         % load(sprintf('./data/data_beat_train/heartbeat/test%d.mat', data_idx));%add by zyy
-        load('./data/data_beat_train/heartbeat/pad.mat');%add by zyy
+        load('./data/data_beat_train/heartbeat/pad_5ms.mat');%add by zyy
         load(sprintf('./data/data_beat_train/heartbeat/ground_truth/rawData_%d.mat', data_idx));
     elseif load_beat_signal == 1 && training_or_testing == 1 && breathing_or_heartbeat == 0
         load(sprintf('./data/data_beat_test/breathing/radarSignal_%d.mat', data_idx));
@@ -158,8 +158,9 @@ for data_idx = 1:data_num
         if sum(map_idx == plot_check_idx) == 1
             figure_yrange = fft_num;
             figure()
-            imagesc(0:ObsTime, (0:figure_yrange-1)*delta_R, abs(RangeMap));
-            title('Range Profile Matrix'); ylabel('Range (m)'); xlabel('Time (sec)');
+            % imagesc(0:ObsTime, (0:figure_yrange-1)*delta_R, abs(RangeMap));
+            imagesc(0:ObsTime, (0:figure_yrange-1)*delta_R, abs(range_profile_matrix_total)); % add by zyy
+           title('Range Profile Matrix'); ylabel('Range (m)'); xlabel('Time (sec)');
         end
 
         %% remove high frequency noise by 2Hz low-pass filter (priori knowledge: the highest frequency of vital signs is 2Hz)
